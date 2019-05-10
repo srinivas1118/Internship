@@ -1,0 +1,27 @@
+NOTE: Do only the first step and directly go to 4th step.
+
+1. To delete the partitions
+sudo umount /dev/sdd*
+sudo dd if=/dev/zero of=/dev/sdd bs=512 count=1 conv=notrunc
+
+
+
+2. Create msdos partition table
+sudo parted -s /dev/sdd mklabel msdos
+
+
+
+3.Create primary partitions
+sudo parted -s /dev/sdd mkpart primary fat32 1MiB 1025MiB
+sudo parted -s /dev/sdd mkpart primary ext4 1080MiB 2080MiB
+sudo mkfs.ext4 /dev/sdd2
+sudo mkfs.vfat /dev/sdd1
+
+
+
+
+
+4. Flash the image using dd command
+sudo dd if=tmp/deploy/images/raspberrypi3/core-image-minimal-raspberrypi3.rpi-sdimg of=/dev/sdd bs=4M
+
+

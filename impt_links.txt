@@ -1,0 +1,57 @@
+1.Instructions to generate image of raspberrypi3
+https://www.instructables.com/id/Building-GNULinux-Distribution-for-Raspberry-Pi-Us/
+
+2.How to format and partition SD card
+https://www.acmesystems.it/microsd_format
+
+3.Booting files details
+https://www.raspberrypi.org/documentation/configuration/config-txt/
+
+4.Booting from USB 
+https://medium.com/@penk/how-to-boot-the-raspberry-pi-3-from-usb-with-ubuntu-core-24df33b0fd60
+https://github.com/raspberrypi/documentation/tree/master/hardware/raspberrypi/bootmodes
+https://www.youtube.com/watch?v=ubnwvxF3Klc
+
+5.Raspberry pi Boot process
+https://wiki.beyondlogic.org/index.php?title=Understanding_RaspberryPi_Boot_Process
+
+6. Etcher.com for flashing images to SD card
+
+7.Calling OS commands from Python code using subprocess package
+https://stackabuse.com/pythons-os-and-subprocess-popen-commands/
+https://stackoverflow.com/questions/89228/calling-an-external-command-in-python
+
+8. U-Boot for yocto image
+https://ktln2.org/2018/10/28/u-boot-rpi0/
+
+9. U-Boot understanding pdf
+http://ftp1.digi.com/support/documentation/90000852_K.pdf
+
+10.Yocto Project Linux Kernel Development Manual
+https://www.yoctoproject.org/docs/latest/kernel-dev/kernel-dev.html#kernel-dev-intro
+
+11. Boot flow
+https://www.raspberrypi.org/documentation/hardware/raspberrypi/bootmodes/bootflow.md
+
+12. How to boot from a USB mass storage device on a Raspberry Pi 
+https://www.raspberrypi.org/documentation/hardware/raspberrypi/bootmodes/msd.md
+
+13. Formatting SD card from terminal (mkfs.fat /dev/sdd)
+https://www.youtube.com/watch?v=dMk5EW8-tTQ
+
+14. Deleting all partitions from SD card
+dd if=/dev/zero of=/dev/sda bs=512 count=1 conv=notrunc
+
+15. Different formatting ways in Ubuntu
+https://askubuntu.com/questions/517354/terminal-method-of-formatting-storage-drive
+
+16> Creating partitions of different size
+https://www.thegeekdiary.com/how-to-create-a-partition-using-parted-command/
+
+080027F2955A
+KOR1064330VM
+
+NOTE: Subprocess.run is not there in python, it is available only in python3. So use subprocess.call and subprocess.Popen
+
+
+

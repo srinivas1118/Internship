@@ -1,0 +1,68 @@
+############################################Procedure to compile U-Boot and Kernel#######################################################
+
+1.Download the U-boot source code which supports bootz command
+wget ftp://ftp.denx.de/pub/u-boot/u-boot-2017.09.tar.bz2
+tar -xjf u-boot-2017.09.tar.bz2 
+cd u-boot-2017.09
+
+
+
+2.Compile U-boot
+Link contains the procedure:  https://groups.google.com/a/lists.mender.io/forum/#!topic/mender/BQE3i4y5J7Y
+$ export CROSS_COMPILE=arm-linux-gnueabihf-
+$ export ARCH=arm
+$ make rpi_3_32b_config
+$ make 
+
+Above should produce a valid u-boot.bin file. 
+Copy the u-boot.bin to SD card boot partition and rename it as kernel7.img
+Write a boot script as follows,
+fdt addr ${fdt_addr} && fdt get value bootargs /chosen bootargs
+fatload mmc 0:1 ${kernel_addr_r} zImage
+bootz ${kernel_addr_r} - ${fdt_addr}
+
+Now we need to convert this text file to .scr format using mkimage tool
+mkimage -A arm -T script -C none -n "Boot script" -d boot.cmd.in boot.scr 
+Copy the generated boot.scr to SD card boot partition.
+
+NOTE: We tried with the 2018 version of U-Boot but it does not support bootz command to load zImage and we were getting Synchrnous abort error to load uImage with bootm command
+
+
+3.Compile Kernel
+Download a CROSS_COMPILER to compile the source code of kernel
+https://developer.arm.com/open-source/gnu-toolchain/gnu-a/downloads/8-2-2018-11
+From this link download "gcc-arm-8.2-2018.11-x86_64-arm-linux-gnueabihf.tar.xz"
+
+Download the kernel source code
+git clone https://github.com/raspberrypi/linux.git
+cd linux
+KERNEL=kernel7
+make ARCH=arm CROSS_COMPILE=/home/ejr1kor/tools_new/gcc-arm-8.2-2018.11-x86_64-arm-linux-gnueabihf/bin/arm-linux-gnueabihf- bcm2709_defconfig
+make ARCH=arm CROSS_COMPILE=/home/ejr1kor/tools_new/gcc-arm-8.2-2018.11-x86_64-arm-linux-gnueabihf/bin/arm-linux-gnueabihf- zImage modules dtbs
+mkdir mnt
+mkdir mnt/fat32
+sudo mount /dev/sdd1 mnt/fat32
+sudo cp arch/arm/boot/zImage mnt/fat32/zImage
+sudo cp arch/arm/boot/dts/*.dtb mnt/fat32/
+sudo cp arch/arm/boot/dts/overlays/*.dtb* mnt/fat32/overlays/
+sudo cp arch/arm/boot/dts/overlays/README mnt/fat32/overlays/
+sudo umount mnt/fat32
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+1. To convert ZImage to uImage
+mkimage -A arm -O linux -T kernel -C none -a 0x80008000 -e 0x80008000 -n "Linux kernel" -d arch/arm/boot/zImage uImage
