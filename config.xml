@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+	<start>
+	
+	<!-- kernel configuration -->
+
+		<kernel>
+
+			<gcc_d_link>https://developer.arm.com/-/media/Files/downloads/gnu-a/8.2-2018.11/gcc-arm-8.2-2018.11-x86_64-arm-linux-gnueabihf.tar.xz</gcc_d_link> 
+
+			<linux_d_link>https://github.com/raspberrypi/linux.git</linux_d_link>
+
+			<extract>
+				<f_name>gcc-arm-8.2-2018.11-x86_64-arm-linux-gnueabihf.tar.xz</f_name> 
+				<dest>linux</dest> 
+			</extract>  
+
+			<kernel_version>KERNEL=KERNEL7</kernel_version>
+
+			<config>
+				<gcc_path>gcc-arm-8.2-2018.11-x86_64-arm-linux-gnueabihf/bin/arm-linux-gnueabihf-</gcc_path>
+				<board_config>bcm2709_defconfig</board_config>
+			</config>
+
+			<image>
+				<img_type>zImage</img_type>
+				<modules>modules</modules>
+				<dtb>dtbs</dtb>
+			</image>
+				  
+		</kernel>
+		
+	
+	<!-- u-boot configuration -->
+
+
+		<uboot>
+
+			<u_boot_d_link>ftp://ftp.denx.de/pub/u-boot/u-boot-2017.09.tar.bz2</u_boot_d_link> 
+
+			<extract_f_name>u-boot-2017.09.tar.bz2</extract_f_name> 
+
+			<ch_dir_name>u-boot-2017.09</ch_dir_name>
+
+			<gcc_d_link>https://developer.arm.com/-/media/Files/downloads/gnu-a/8.2-2018.11/gcc-arm-8.2-2018.11-x86_64-arm-linux-gnueabihf.tar.xz</gcc_d_link>
+			
+			<extract_gcc_f_name>gcc-arm-8.2-2018.11-x86_64-arm-linux-gnueabihf.tar.xz</extract_gcc_f_name>
+
+			<config>
+			<gcc_path>gcc-arm-8.2-2018.11-x86_64-arm-linux-gnueabihf/bin/arm-linux-gnueabihf-</gcc_path>
+			<uboot_conf>rpi_3_32b_config</uboot_conf>
+			</config> 
+			
+			<boot_scr_d_link>https://raw.githubusercontent.com/Gauravkamit/Internship/master/boot.cmd.in</boot_scr_d_link>
+			
+			<scr_name>boot.cmd.in</scr_name> 
+			
+		</uboot>
+		
+	
+	<!-- flash configuration -->
+	
+		<flash>
+		
+			<sd_name>/dev/mmcblk0</sd_name>
+			
+			<fat_32>
+				<start_size>1MiB</start_size>
+				<end_size>1025MiB</end_size> 
+			</fat_32> 
+			
+			<ext4>
+				<start_size>1080MiB</start_size>
+				<end_size>6080MiB</end_size> 
+			</ext4> 
+			
+			
+			<zimage_path>arch/arm/boot/zImage</zimage_path> 
+			
+			<dtb_path>arch/arm/boot/dts/*.dtb</dtb_path> 
+			
+			<overlays_dtb_path>arch/arm/boot/dts/overlays/*.dtb*</overlays_dtb_path>
+			
+			<readme_path>arch/arm/boot/dts/overlays/README</readme_path> 
+			
+		</flash>
+		
+	<!-- rootfs configuration -->
+	
+		<rootfs>
+		
+			<f_name>ubuntumate_root_file.tar.gz</f_name>
+			
+		</rootfs>	
+		
+	<!-- firmware configuration -->	
+	
+		<firmware>
+		
+			<d_link>https://github.com/raspberrypi/firmware/raw/master/boot</d_link>
+		
+		</firmware>
+	
+
+	</start>
+	
